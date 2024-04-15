@@ -1,4 +1,4 @@
 .env
 /config_db/config.ini
-/ETL/credentials_module.json
-/ETL/settings.yaml
+/Airflow_ETL/credentials_module.json
+/Airflow_ETL/settings.yaml
