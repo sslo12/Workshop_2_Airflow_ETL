@@ -3,9 +3,9 @@ from airflow import DAG
 from airflow.operators.python import PythonOperator
 from airflow.models.baseoperator import chain
 from datetime import datetime
-from T_Grammy import load_db, transform_db
-from T_Spotify import load_csv, transform_csv
-from Me_Lo_St import merge, load, store
+from Airflow_ETL.T_Grammy import load_db, transform_db
+from Airflow_ETL.T_Spotify import load_csv, transform_csv
+from Airflow_ETL.Me_Lo_St import merge, load, store
 
 
 default_args = {
@@ -68,6 +68,6 @@ with DAG(
         provide_context = True,
     )
 
-    merge >> load >> store
     load_csv >> transform_csv >> merge
     load_db >> transform_db >> merge
+    merge >> load >> store

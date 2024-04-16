@@ -17,9 +17,7 @@ def create_connection():
             host=host,
             user=user,
             password=password,
-            database=database,
-            cursorclass=pymysql.cursors.DictCursor
-        )
+            database=database)
         print("Successful Connection")
         return conn
     except pymysql.Error as e:

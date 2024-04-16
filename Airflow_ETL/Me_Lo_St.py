@@ -5,9 +5,9 @@ import pandas as pd
 import json
 import call_db
 
-credentials_path = '../ETL/credentials_module.json'
+credentials_path = '../Airflow_ETL/credentials_module.json'
 
-# INICIAR SESION
+# LOGIN SESSION
 def login():
     GoogleAuth.DEFAULT_SETTINGS['client_config_file'] = credentials_path
     gauth = GoogleAuth()
@@ -27,7 +27,7 @@ def login():
     credenciales = GoogleDrive(gauth)
     return credenciales
 
-# SUBIR UN ARCHIVO A DRIVE
+# UPLOAD A FILE TO DRIVE
 def upload_csv(file_path, id_folder):
     credenciales = login()
     file_csv = credenciales.CreateFile({'parents': [{"kind": "drive#fileLink",\
@@ -38,10 +38,9 @@ def upload_csv(file_path, id_folder):
     logging.info("Data Successfully Uploaded to Google Drive.")
 
 def decade(year):
-    """Calcula la década de un año dado."""
     return (year // 10) * 10
 
-# COMBINACIÓN DE CSV Y DB
+# COMBINATION OF CSV AND DB
 def merge(**kwargs):
     ti = kwargs['ti']
     def data_normalize(task_id):
@@ -61,11 +60,10 @@ def merge(**kwargs):
                            'energy', 'valence', 'album_name', 'explicit', 'decade']
     merged_data = merged_data[columns_of_interest]
     logging.info("Data merging process successfully completed.")
-
     return merged_data.to_json(orient='records')
 
 
-# CARGAR CSV FUSIONADO A LA DB
+# LOAD MERGED CSV TO DB
 def load(**kwargs):
     ti = kwargs["ti"]
     json_data = ti.xcom_pull(task_ids="merge")
@@ -82,7 +80,7 @@ def load(**kwargs):
         logging.error("No data available to load.")
 
 
-# CARGAR CSV FUSIONADO A DRIVE
+# LOAD CSV MERGED TO DRIVE
 def store(**kwargs):
     ti = kwargs["ti"]
     json_data = ti.xcom_pull(task_ids="merge")
