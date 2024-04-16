@@ -32,18 +32,18 @@ def transform_csv(df_spotify):
     logging.info('Removed duplicate records')
     return df_spotify
 
-def save_csv(df, output_file):
-    logging.info("Saving cleaned data...")
-    df.to_csv(output_file, index=False)
-    logging.info("Data saved successfully.")
+#def save_csv(df, output_file):
+#    logging.info("Saving cleaned data...")
+#    df.to_csv(output_file, index=False)
+#    logging.info("Data saved successfully.")
 
-def main():
-    file_path = './Datasets/spotify_dataset.csv'
-    transformed_file = './Datasets/transformed_spotify_df.csv'
-    df = load_csv(file_path)
-    transformed_df = transform_csv(df)
-    save_csv(transformed_df, transformed_file)
-    logging.info('Data transformation process completed successfully')
+#def main():
+#    file_path = './Datasets/spotify_dataset.csv'
+#    transformed_file = './Datasets/transformed_spotify_df.csv'
+#    df = load_csv(file_path)
+#    transformed_df = transform_csv(df)
+#    save_csv(transformed_df, transformed_file)
+#    logging.info('Data transformation process completed successfully')
 
-if __name__ == '__main__':
-    main()
+#if __name__ == '__main__':
+#    main()

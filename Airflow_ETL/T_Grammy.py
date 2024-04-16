@@ -26,18 +26,18 @@ def transform_db(df):
     logging.info("Cleaning and transformation processes completed.")
     return df
 
-def save_db(df, output_file):
-    logging.info("Saving cleaned data...")
-    df.to_csv(output_file, index=False)
-    logging.info("Data saved successfully.")
+#def save_db(df, output_file):
+#    logging.info("Saving cleaned data...")
+#    df.to_csv(output_file, index=False)
+#   logging.info("Data saved successfully.")
+#
+#def main():
+#    output_file = './Datasets/transformed_grammy.csv'
+#    df = load_db()
+#    if df is not None:
+#        transformed_df = transform_db(df)
+#        save_db(transformed_df, output_file)
+#        logging.info('Data transformation process completed successfully')
 
-def main():
-    output_file = './Datasets/transformed_grammy.csv'
-    df = load_db()
-    if df is not None:
-        transformed_df = transform_db(df)
-        save_db(transformed_df, output_file)
-        logging.info('Data transformation process completed successfully')
-
-if __name__ == "__main__":
-    main()
+#if __name__ == "__main__":
+#    main()

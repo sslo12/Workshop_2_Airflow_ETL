@@ -7,7 +7,7 @@ logging.basicConfig(level=logging.INFO)
 
 def create_connection():
     config = configparser.ConfigParser()
-    config.read('./config_db/config.ini')
+    config.read('./Config_db/config.ini')
     host = config['mysql']['host']
     user = config['mysql']['user']
     password = config['mysql']['password']
@@ -25,14 +25,16 @@ def create_connection():
         return None
 
 def query_db():
-    conn, cursor = create_connection()
-    db_table = ('SELECT * FROM grammy')
-    cursor.execute(db_table)
-    rows = cursor.fetchall()
-    columns = [desc[0] for desc in cursor.description]
-    df = pd.DataFrame(rows, columns=columns)
-    conn.close()
-    return df
+    conn = create_connection()
+    if conn:
+        cursor = conn.cursor()
+        db_table = 'SELECT * FROM grammy'
+        cursor.execute(db_table)
+        rows = cursor.fetchall()
+        columns = [desc[0] for desc in cursor.description]
+        df = pd.DataFrame(rows, columns=columns)
+        conn.close()
+        return df
 
 def create_table_db(cursor):
     cursor.execute("USE grammydb")
