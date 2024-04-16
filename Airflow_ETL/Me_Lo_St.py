@@ -5,7 +5,7 @@ import pandas as pd
 import json
 import call_db
 
-credentials_path = '../Airflow_ETL/credentials_module.json'
+credentials_path = './Airflow_ETL/credentials_module.json'
 
 # LOGIN SESSION
 def login():
@@ -29,8 +29,8 @@ def login():
 
 # UPLOAD A FILE TO DRIVE
 def upload_csv(file_path, id_folder):
-    credenciales = login()
-    file_csv = credenciales.CreateFile({'parents': [{"kind": "drive#fileLink",\
+    credentials = login()
+    file_csv = credentials.CreateFile({'parents': [{"kind": "drive#fileLink",\
                                                     "id": id_folder}]})
     file_csv['title'] = file_path.split("/")[-1]
     file_csv.SetContentFile(file_path)
