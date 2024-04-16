@@ -55,10 +55,10 @@ def merge(**kwargs):
     merged_data['decade'] = merged_data['year'].apply(decade)
     if 'grammy_id' in merged_data.columns:
         merged_data.drop_duplicates(subset='grammy_id', inplace=True)
-    columns_of_interest = ['year', 'category', 'nominee', 'artist', 'was_nominated', 
+    col_interest = ['year', 'category', 'nominee', 'artist', 'was_nominated', 
                            'track_id', 'artists', 'track_name', 'popularity', 'danceability', 
                            'energy', 'valence', 'album_name', 'explicit', 'decade']
-    merged_data = merged_data[columns_of_interest]
+    merged_data = merged_data[col_interest]
     logging.info("Data merging process successfully completed.")
     return merged_data.to_json(orient='records')
 
@@ -86,7 +86,7 @@ def store(**kwargs):
     json_data = ti.xcom_pull(task_ids="merge")
     if json_data:
         data = pd.json_normalize(json_data)
-        csv_file_path = './DatasetS/awards.csv'
+        csv_file_path = './Datasets/awards.csv'
         data.to_csv(csv_file_path, index=False)
         upload_csv(csv_file_path, '1PnHh7eQz-aWPwuXALNQ2Hu7JaGIWaYUB')
         logging.info("File 'awards.csv' stored and uploaded to Google Drive.")
