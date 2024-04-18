@@ -1,6 +1,7 @@
 import pandas as pd
 import logging
 import call_db
+import json
 
 def load_db():
     logging.info("Loading data from MySQL database...")
@@ -8,7 +9,10 @@ def load_db():
     logging.info("Data loaded successfully.")
     return data_grammy
 
-def transform_db(df):
+def transform_db(**kwargs):
+    ti = kwargs["ti"]
+    df_db = json.loads(ti.xcon_pull(taks_ids="load_db"))
+    df = pd.json_normalize(df_db)
     logging.info("Starting cleaning and transformation processes...")
     df['published_at'] = pd.to_datetime(df['published_at'])
     df['updated_at'] = pd.to_datetime(df['updated_at'])

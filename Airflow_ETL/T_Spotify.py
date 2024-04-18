@@ -1,15 +1,19 @@
 import pandas as pd
 import logging
+import json
 
-file_path = './Datasets/spotify_dataset.csv'
 
-def load_csv(file_path):
+def load_csv():
     logging.info("Extract Data...")
+    file_path = './Datasets/spotify_dataset.csv'
     data = pd.read_csv(file_path)
     logging.info("Data Extract Successfully.")
     return data
 
-def transform_csv(df_spotify):
+def transform_csv(**kwargs):
+    ti = kwargs["ti"]
+    csv = json.loads(ti.com_pull(taks_ids=load_csv))
+    df_spotify = pd.json_normalize(data=csv)
     logging.info('Starting data cleaning and transformations...')
 
     if 'Unnamed: 0' in df_spotify.columns:
@@ -49,4 +53,3 @@ def transform_csv(df_spotify):
 
 #if __name__ == '__main__':
 #    main()
-load_csv(file_path)
