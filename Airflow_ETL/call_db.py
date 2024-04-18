@@ -78,3 +78,5 @@ def insert_data(json_data):
         finally:
             cursor.close()
             conn.close()
+
+create_connection()

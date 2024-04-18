@@ -11,7 +11,7 @@ def load_db():
 
 def transform_db(**kwargs):
     ti = kwargs["ti"]
-    df_db = json.loads(ti.xcon_pull(taks_ids="load_db"))
+    df_db = json.loads(ti.xcom_pull(taks_ids="load_db"))
     df = pd.json_normalize(df_db)
     logging.info("Starting cleaning and transformation processes...")
     df['published_at'] = pd.to_datetime(df['published_at'])

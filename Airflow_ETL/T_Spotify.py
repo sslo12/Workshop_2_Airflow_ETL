@@ -12,7 +12,7 @@ def load_csv():
 
 def transform_csv(**kwargs):
     ti = kwargs["ti"]
-    csv = json.loads(ti.com_pull(taks_ids=load_csv))
+    csv = json.loads(ti.xcom_pull(taks_ids=load_csv))
     df_spotify = pd.json_normalize(data=csv)
     logging.info('Starting data cleaning and transformations...')
 
