@@ -43,13 +43,12 @@ def decade(year):
 # COMBINATION OF CSV AND DB
 def merge(**kwargs):
     ti = kwargs['ti']
-    def data_normalize(task_id):
-        merge_data = json.loads(ti.xcom_pull(task_ids=task_id))
-        return pd.json_normalize(merge_data)
-    logging.info("Data merging process started...")
+    data = json.loads(ti.xcom_pull(task_ids="transform_db"))
+    grammy_df = pd.json_normalize(data=data)
 
-    grammy_df = data_normalize('T_Grammy')
-    spotify_df = data_normalize('T_Spotify')
+    data = json.loads(ti.xcom_pull(task_ids="transform_csv"))
+    spotify_df = pd.json_normalize(data=data)
+    logging.info("Data merging process started...")
 
     merged_data = pd.merge(grammy_df, spotify_df, left_on='artist', right_on='artists', how='inner')
     merged_data['decade'] = merged_data['year'].apply(decade)
@@ -66,9 +65,9 @@ def merge(**kwargs):
 # LOAD MERGED CSV TO DB
 def load(**kwargs):
     ti = kwargs["ti"]
-    json_data = ti.xcom_pull(task_ids="merge")
-    if json_data:
-        data = pd.json_normalize(json_data)
+    data = ti.xcom_pull(task_ids="merge")
+    if data:
+        data = pd.json_normalize(data)
         logging.info("Data normalized and DataFrame created.")
         
         try:
@@ -83,9 +82,9 @@ def load(**kwargs):
 # LOAD CSV MERGED TO DRIVE
 def store(**kwargs):
     ti = kwargs["ti"]
-    json_data = ti.xcom_pull(task_ids="merge")
-    if json_data:
-        data = pd.json_normalize(json_data)
+    data = ti.xcom_pull(task_ids="merge")
+    if data:
+        data = pd.json_normalize(data)
         csv_path = './Datasets/awards.csv'
         data.to_csv(csv_path, index=False)
         upload_csv(csv_path, '1PnHh7eQz-aWPwuXALNQ2Hu7JaGIWaYUB')

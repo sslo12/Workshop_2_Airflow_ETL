@@ -67,6 +67,7 @@ with DAG(
         provide_context = True,
     )
 
-    merge >> load >> store
+    
     load_csv >> transform_csv >> merge
     load_db >> transform_db >> merge
+    merge >> load >> store
