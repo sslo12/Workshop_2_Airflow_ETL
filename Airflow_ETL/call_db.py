@@ -69,25 +69,27 @@ def create_table_db(cursor):
     print("Table created successfully")
 
 def insert_data(json_data):
-    conn = create_connection()
-    if conn is not None:
-        df = pd.read_json(json_data)
-        cursor = conn.cursor()
-        insert_query = """
-        INSERT INTO awards (year, category, nominee, artist, was_nominated, track_id, artists, 
-        track_name, popularity, danceability, energy, valence, album_name, explicit, decade)
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-        """
+    conn, cursor = create_connection()
+    if conn is not None and cursor is not None:
         try:
+            df = pd.read_json(json_data)
+            insert_query = """
+            INSERT INTO awards (
+                year, category, nominee, artist, was_nominated, track_id, artists,
+                track_name, popularity, danceability, energy, valence, album_name, explicit, decade
+            ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            """
             data_tuples = [tuple(x) for x in df.to_numpy()]
             cursor.executemany(insert_query, data_tuples)
             conn.commit()
-            print("Data inserted successfully")
+            logging.info("Data inserted successfully")
         except pymysql.Error as e:
-            print("Failed to insert data: %s", e)
+            logging.error("Failed to insert data: %s", e)
             conn.rollback()
+        except ValueError as e:
+            logging.error("Data processing error: %s", e)
         finally:
             cursor.close()
             conn.close()
-
-query_db()
+    else:
+        logging.error("Connection failed")
