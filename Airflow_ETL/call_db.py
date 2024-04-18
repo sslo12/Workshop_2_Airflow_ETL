@@ -2,16 +2,18 @@ import configparser
 import pymysql
 import pandas as pd
 import logging
+import json
 
 logging.basicConfig(level=logging.INFO)
 
 def create_connection():
-    config = configparser.ConfigParser()
-    config.read('./Config_db/config.ini')
+    with open('./Airflow_ETL/db_config.json', 'r') as file:
+        config = json.load(file)
     host = config['mysql']['host']
     user = config['mysql']['user']
     password = config['mysql']['password']
     database = config['mysql']['database']
+    
     try:
         conn = pymysql.connect(
             host=host,
@@ -21,7 +23,7 @@ def create_connection():
         print("Successful Connection")
         return conn
     except pymysql.Error as e:
-        print("Connection Error: %s", e)
+        print(f"Connection Error: {e}")
         return None
 
 def query_db():
@@ -78,5 +80,3 @@ def insert_data(json_data):
         finally:
             cursor.close()
             conn.close()
-
-create_connection()

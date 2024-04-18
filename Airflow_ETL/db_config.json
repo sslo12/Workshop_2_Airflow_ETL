@@ -1,0 +1,8 @@
+{
+    "mysql": {
+        "host": "172.30.159.254",
+        "user": "Slo",
+        "password": "password",
+        "database": "grammydb"
+    }
+}
