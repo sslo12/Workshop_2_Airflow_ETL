@@ -1,6 +1,8 @@
 import pandas as pd
 import logging
 
+file_path = './Datasets/spotify_dataset.csv'
+
 def load_csv(file_path):
     logging.info("Extract Data...")
     data = pd.read_csv(file_path)
@@ -47,3 +49,4 @@ def transform_csv(df_spotify):
 
 #if __name__ == '__main__':
 #    main()
+load_csv(file_path)

@@ -2,4 +2,3 @@
 /Config_db/config.ini
 /Airflow_ETL/credentials_module.json
 /Airflow_ETL/settings.yaml
-/Airflow_ETL/__pycache__

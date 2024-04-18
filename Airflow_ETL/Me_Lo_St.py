@@ -86,7 +86,7 @@ def store(**kwargs):
     json_data = ti.xcom_pull(task_ids="merge")
     if json_data:
         data = pd.json_normalize(json_data)
-        csv_file_path = './Datasets/awards.csv'
-        data.to_csv(csv_file_path, index=False)
-        upload_csv(csv_file_path, '1PnHh7eQz-aWPwuXALNQ2Hu7JaGIWaYUB')
+        csv_path = './Datasets/awards.csv'
+        data.to_csv(csv_path, index=False)
+        upload_csv(csv_path, '1PnHh7eQz-aWPwuXALNQ2Hu7JaGIWaYUB')
         logging.info("File 'awards.csv' stored and uploaded to Google Drive.")
