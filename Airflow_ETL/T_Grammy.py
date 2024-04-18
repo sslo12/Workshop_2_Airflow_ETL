@@ -7,7 +7,7 @@ def load_db():
     logging.info("Loading data from MySQL database...")
     data_grammy = call_db.query_db()
     logging.info("Data loaded successfully.")
-    return data_grammy
+    return data_grammy.to_json(orient='records')
 
 def transform_db(**kwargs):
     ti = kwargs["ti"]
@@ -28,7 +28,7 @@ def transform_db(**kwargs):
     df.drop_duplicates(inplace=True)
     logging.info("Removed duplicates.")
     logging.info("Cleaning and transformation processes completed.")
-    return df
+    return df.to_json(orient='records')
 
 #def save_db(df, output_file):
 #    logging.info("Saving cleaned data...")

@@ -8,7 +8,7 @@ def load_csv():
     file_path = './Datasets/spotify_dataset.csv'
     data = pd.read_csv(file_path)
     logging.info("Data Extract Successfully.")
-    return data
+    return data.to_json(orient='records')
 
 def transform_csv(**kwargs):
     ti = kwargs["ti"]
