@@ -13,7 +13,7 @@ def load_csv():
 def transform_csv(**kwargs):
     ti = kwargs["ti"]
     csv = json.loads(ti.xcom_pull(task_ids="load_csv"))
-    df_spotify = pd.json_normalize(csv)
+    df_spotify = pd.json_normalize(data=csv)
     logging.info('Starting data cleaning and transformations...')
 
     df_spotify.drop('Unnamed: 0', axis=1, inplace=True)
@@ -35,7 +35,7 @@ def transform_csv(**kwargs):
     
     df_spotify.drop_duplicates(inplace=True)
     logging.info('Removed duplicate records')
-    return df_spotify
+    return df_spotify.to_json(orient='records')
 
 #def save_csv(df, output_file):
 #    logging.info("Saving cleaned data...")

@@ -5,36 +5,47 @@ import logging
 
 logging.basicConfig(level=logging.INFO)
 
+ 
 def create_connection():
     config = configparser.ConfigParser()
-    config.read('./Config._db/config.ini')
+    config.read('./Config_db/config.ini')
     host = config['mysql']['host']
     user = config['mysql']['user']
     password = config['mysql']['password']
     database = config['mysql']['database']
+
     try:
         conn = pymysql.connect(
             host=host,
             user=user,
             password=password,
-            database=database)
+            database=database
+        )
         print("Successful Connection")
-        return conn
+        cursor = conn.cursor()
+        return conn, cursor
     except pymysql.Error as e:
-        print("Connection Error: %s", e)
-        return None
+        print("Connection Error:", e)
+    return None, None
 
 def query_db():
-    conn = create_connection()
-    if conn:
-        cursor = conn.cursor()
-        db_table = 'SELECT * FROM grammy'
-        cursor.execute(db_table)
-        rows = cursor.fetchall()
-        columns = [desc[0] for desc in cursor.description]
-        df = pd.DataFrame(rows, columns=columns)
-        conn.close()
-        return df
+    conn, cursor = create_connection()
+    if conn and cursor:
+        try:
+            query = 'SELECT * FROM grammy'
+            cursor.execute(query)
+            rows = cursor.fetchall()
+            columns = [desc[0] for desc in cursor.description]
+            df = pd.DataFrame(rows, columns=columns)
+            return df
+        except pymysql.Error as e:
+            logging.error(f"Error fetching data: {e}")
+        finally:
+            conn.close()
+            logging.info("Database connection closed.")
+    else:
+        logging.info("No database connection available.")
+        return None
 
 def create_table_db(cursor):
     cursor.execute("USE grammydb")
@@ -79,4 +90,4 @@ def insert_data(json_data):
             cursor.close()
             conn.close()
 
-create_connection()
+query_db()
