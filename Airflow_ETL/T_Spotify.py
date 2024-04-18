@@ -16,9 +16,8 @@ def transform_csv(**kwargs):
     df_spotify = pd.json_normalize(data=csv)
     logging.info('Starting data cleaning and transformations...')
 
-    if 'Unnamed: 0' in df_spotify.columns:
-        df_spotify.drop('Unnamed: 0', axis=1, inplace=True)
-        logging.info('Removed redundant index column')
+    df_spotify.drop('Unnamed: 0', axis=1, inplace=True)
+    logging.info('Removed redundant index column')
     
     df_spotify.drop(df_spotify[df_spotify['track_id'] == '1kR4gIb7nGxHPI3D2ifs59'].index, axis=0, inplace=True)
     logging.info('Removed specific track with known issues')
