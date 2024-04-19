@@ -5,7 +5,6 @@ import logging
 
 logging.basicConfig(level=logging.INFO)
 
- 
 def create_connection():
     config = configparser.ConfigParser()
     config.read('./Config_db/config.ini')
