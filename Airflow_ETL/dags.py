@@ -2,7 +2,6 @@ from datetime import timedelta
 from datetime import datetime
 from airflow import DAG
 from airflow.operators.python import PythonOperator
-from airflow.models.baseoperator import chain
 from T_Grammy import load_db, transform_db
 from T_Spotify import load_csv, transform_csv
 from Me_Lo_St import merge, load, store
