@@ -28,7 +28,7 @@ This is a dataset of Spotify tracks over a range of 125 different genres. Each t
 
 # Implementation Instructions
 ### Step 1: Clone the Repository
-    git clone https://github.com/sslo12/Workshop-2-ETL
+    git clone https://github.com/sslo12/Workshop-2
 
 ### Step 2: Create config.init
 In the Config_db folder Create a config.ini file and copy the credentials of your MySQL database into it.
