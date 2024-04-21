@@ -12,9 +12,8 @@ The main goals of this workshop are:
   * <img src="https://github.com/sslo12/Workshop-1-ETL/assets/115416417/b23a91ab-151a-4dd8-b421-fc87111e3481" alt="Looker Studio" width="21px" height="21px"> Python
   * <img src="https://cdn.icon-icons.com/icons2/2667/PNG/512/jupyter_app_icon_161280.png" alt="Looker Studio" width="21px" height="21px"> Jupyter Notebook
   * <img src="https://cdn.icon-icons.com/icons2/2415/PNG/512/mysql_original_wordmark_logo_icon_146417.png" alt="Looker Studio" width="21px" height="21px"> Relational database (MySQL)
-  * <img src="https://cdn.icon-icons.com/icons2/1508/PNG/512/apache-airflow-1_icon-icons.com_76272.png" alt="Apache Airflow" width="21px" height="21px"> Apache Airflow
-  * <img src="https://cdn.icon-icons.com/icons2/1381/PNG/512/csv_93405.png" alt="CSV files" width="21px" height="21px"> CSV files
-  * <img src="https://cdn.icon-icons.com/icons2/1508/PNG/512/microsoftwindows_103392.png" alt="Windows Subsystem for Linux (WLS)" width="21px" height="21px"> Windows Subsystem for Linux (WLS)
+  * <img src="![image](https://github.com/sslo12/Workshop-2/assets/115416417/dfa7c841-a14b-4638-9c9e-cff8738a2ab0)" alt="Apache Airflow" width="21px" height="21px"> Apache Airflow
+  * <img src="![image](https://github.com/sslo12/Workshop-2/assets/115416417/6a50f962-c6b1-4d2f-bc2c-23e5f2c55fe2)" alt="Windows Subsystem for Linux (WLS)" width="21px" height="21px"> Windows Subsystem for Linux (WLS)
   * <img src="https://i.pinimg.com/736x/7a/f2/1e/7af21eaf89a449831a1e12d640b54fae.jpg" alt="Looker Studio" width="21px" height="21px"> Power BI Desktop
 ***
 # Data Information
@@ -22,29 +21,7 @@ The dataset the_grammy_awards contains information about the Grammy Awards, incl
 This is a dataset of Spotify tracks over a range of 125 different genres. Each track has some audio features associated with it. The data is in CSV format which is tabular and can be loaded quickly.
 ***
 # Workflow
-Airflow_ETL/
-│
-├── Me_Lo_St.py
-├── T_Grammy.py
-├── T_Spotify.py
-├── call_db.py
-├── dags.py
-│
-├── Config_db/
-│   └── (Database configuration files)
-│
-├── Datasets/
-│   ├── awards.csv
-│   ├── spotify_dataset.csv
-│   └── the_grammy_awards.csv
-│
-├── Notebooks/
-│   ├── EDA_grammy.ipynb
-│   └── EDA_spotify.ipynb
-│
-├── .gitignore
-├── Dashboard.pdf
-└── requirements.txt
+![image](https://github.com/sslo12/Workshop-2/assets/115416417/bdfdcc6a-434b-4d2c-ba7f-b7a6e3d90e36)
 ***
 
 # Implementation Instructions
@@ -109,19 +86,11 @@ To set up the dashboard and connect PowerBI to Drive, you can follow the instruc
 
 ### References
 1.	12.2. CONECTARSE A LA BASE DE DATOS Y EJECUTAR CONSULTAS. (N.D.). UNIWEBSIDAD.COM. RETRIEVED MARCH 8, 2024, FROM HTTPS://UNIWEBSIDAD.COM/LIBROS/PYTHON/CAPITULO-12/CONECTARSE-A-LA-BASE-DE-DATOS-Y-EJECUTAR-CONSULTAS
-
 2.	MATPLOTLIB TUTORIAL. (N.D.). W3SCHOOLS.COM. RETRIEVED MARCH 8, 2024, FROM HTTPS://WWW.W3SCHOOLS.COM/PYTHON/MATPLOTLIB_INTRO.ASP NA. (2019, DECEMBER 12). ANÁLISIS EXPLORATORIO DE DATOS CON PANDAS EN PYTHON. APRENDE 
-
 3.	MACHINE LEARNING. HTTPS://WWW.APRENDEMACHINELEARNING.COM/ANALISIS-EXPLORATORIO-DE- DATOS-PANDAS-PYTHON/
-
 4.	TUTORIAL DE POWER BI: APRENDE A UTILIZAR LA HERRAMIENTA DE BI DE MICROSOFT. (2022, MAY 17). FORMACIÓN EN CIENCIA DE DATOS | DATASCIENTEST.COM; DATASCIENTEST. HTTPS://DATASCIENTEST.COM/ES/TUTORIAL-DE-POWER-BI-UTILIZAR-LA-HERRAMIENTA
-
 5.	LUNA, F. (S/F). GOOGLEDRIVEPYDRIVE.PY AT MAIN · ALUNA1997/PYTHON_AND_PYDRIVE2.
-
 6.	TUTORIAL EDA PARA DATA SCIENCE. (2022, DICIEMBRE 13). KAGGLE.COM; KAGGLE. HTTPS://WWW.KAGGLE.COM/CODE/MICHELDC55/TUTORIAL-EDA-PARA-DATA-SCIENCE
-
 7.	USING MATPLOTLIB — MATPLOTLIB 3.8.4 DOCUMENTATION. (S/F). MATPLOTLIB.ORG. RECUPERADO EL 21 DE ABRIL DE 2024, DE HTTPS://MATPLOTLIB.ORG/STABLE/USERS/INDEX.HTML
-
 8.	[MOONCODE]. (2021). APRENDE A USAR GOOGLE DRIVE CON PYTHON EN 20 MINUTOS 😃💻-LEARN PYTHON AND GOOGLE DRIVE IN 20 MINUTES. YOUTUBE. HTTPS://YOUTU.BE/ZI4XJWBPEWU?SI=UA8QHSPM0AMWVIFQ
-
 9.	[CENTRO VIRTUAL UNIVERSITARIO - CVU]. (2022). VINCULAR DE GOOGLE DRIVE A POWER BI. YOUTUBE. HTTPS://YOUTU.BE/UFRVF6BTLKC?SI=MINUJ9LOLGLK3SZ5
