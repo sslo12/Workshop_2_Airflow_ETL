@@ -7,12 +7,12 @@ def load_csv():
     file_path = './Datasets/spotify_dataset.csv'
     df_spotify = pd.read_csv(file_path)
     logging.info("Data Extracted Successfully.")
-    return df_spotify
+    return df_spotify.to_json(orient='records')
 
 def transform_csv(**kwargs):
     ti = kwargs["ti"]
-    json_data = json.loads(ti.xcom_pull(task_ids="load_csv"))
-    df_spotify = pd.json_normalize(data=json_data)
+    json_d = json.loads(ti.xcom_pull(task_ids="load_csv"))
+    df_spotify = pd.json_normalize(data=json_d)
     logging.info('Starting data cleaning and transformations...')
     
     df_spotify.drop('Unnamed: 0', axis=1, inplace=True)
