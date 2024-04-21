@@ -6,7 +6,8 @@ The main goals of this workshop are:
 
 1. **Load Data**: Transfer data from CSV files to a relational database.
 2. **Create an ETL Pipeline**: Extract, transform, and merge data, storing the results in a database and as a CSV file in Google Drive.
-3. **Data Visualization**: Display data through chart visualizations that pull information directly from the database, not the CSV files.
+3. **Airflow**: A DAG is configured to orchestrate data extraction, transformation and loading tasks, scheduling their execution, error handling and notifications, thus ensuring workflow automation and efficiency.
+4. **Data Visualization**: Display data through chart visualizations that pull information directly from the database, not the CSV files.
 ***
 # Technologies Used
   * <img src="https://github.com/sslo12/Workshop-1-ETL/assets/115416417/b23a91ab-151a-4dd8-b421-fc87111e3481" alt="Looker Studio" width="21px" height="21px"> Python
@@ -14,6 +15,7 @@ The main goals of this workshop are:
   * <img src="https://cdn.icon-icons.com/icons2/2415/PNG/512/mysql_original_wordmark_logo_icon_146417.png" alt="Looker Studio" width="21px" height="21px"> Relational database (MySQL)
   * <img src="https://github.com/sslo12/Workshop-2/assets/115416417/dfa7c841-a14b-4638-9c9e-cff8738a2ab0" alt="Apache Airflow" width="21px" height="21px"> Apache Airflow
   * <img src="https://github.com/sslo12/Workshop-2/assets/115416417/6a50f962-c6b1-4d2f-bc2c-23e5f2c55fe2" alt="Windows Subsystem for Linux (WLS)" width="21px" height="21px"> Windows Subsystem for Linux (WLS)
+  * <img src="https://github.com/sslo12/Workshop-2/assets/115416417/1bf9fb63-bf67-41a8-a79b-08cc4a12b342" alt="API Google Drive" width="21px" height="21px"> API Google Drive
   * <img src="https://i.pinimg.com/736x/7a/f2/1e/7af21eaf89a449831a1e12d640b54fae.jpg" alt="Looker Studio" width="21px" height="21px"> Power BI Desktop
 ***
 # Data Information
