@@ -11,10 +11,12 @@ def load_db():
     return data_grammy
 
 
-def transform_db():
+def transform_db(**kwargs):
+    ti = kwargs["ti"]
+    json_data = ti.xcom_pull(task_ids="read_db")
     logging.info("Starting cleaning and transformation processes...")
-    df_db = call_db.query_db()
-    df = pd.DataFrame(df_db)
+    #df_db = call_db.query_db()
+    df = pd.DataFrame(json_data)
 
     df.dropna(subset=['artist'], inplace=True)
     logging.info("Handled missing values.")

@@ -38,11 +38,13 @@ def upload_csv(file_path, id_folder):
     logging.info(f"Data Successfully Uploaded to Google Drive: {file_path}")
 
 # COMBINE CSV AND DB DATA
-def merge(spotify_data, grammy_data):
-    grammy = json.loads(grammy_data)
-    grammy_df = pd.json_normalize(grammy)
-    spotify = json.loads(spotify_data)
-    spotify_df = pd.json_normalize(spotify)
+def merge(**kwargs):
+    ti = kwargs["ti"]
+    grammy = json.loads(ti.xcom_pull(task_ids="transform_db"))
+    grammy_df = pd.json_normalize(data=grammy)
+
+    spotify = json.loads(ti.xcom_pull(task_ids="transform_csv"))
+    spotify_df = pd.json_normalize(data=spotify)
     logging.info("Data merging process started...")
 
     merged_df = spotify_df.merge(grammy_df, how="inner", left_on='track_name', right_on='nominee')
@@ -62,28 +64,32 @@ def merge(spotify_data, grammy_data):
     return merged_data.to_json(orient='records')
 
 # LOAD DATA TO DATABASE
-def load_to_db(data):
-    data = json.loads(data)
-    data_load = pd.json_normalize(data)
+def load(**kwargs):
+    ti = kwargs["ti"]
+    data = json.loads(ti.xcom_pull(task_ids="merge"))
+    data_load = pd.json_normalize(data=data)
     call_db.insert_data(data_load)
     logging.info("Data has been successfully loaded into the database.")
 
 
 # STORE AND UPLOAD DATA TO DRIVE
-def store_to_drive():
+def store(**kwargs):
+    ti = kwargs["ti"]
+    data = json.loads(ti.xcom_pull(task_ids="merge"))
+    data = pd.json_normalize(data=data)
     file_path = './Datasets/awards.csv'
     upload_csv(file_path, '1PnHh7eQz-aWPwuXALNQ2Hu7JaGIWaYUB')
     logging.info("File 'awards.csv' stored and uploaded to Google Drive.")
 
 # MAIN EXECUTION
-def main():
-    df_spotify = load_csv()
-    df_spotify_transform = transform_csv(df_spotify)
-    df_grammy_transform = transform_db()
+#def main():
+#    df_spotify = load_csv()
+#    df_spotify_transform = transform_csv(df_spotify)
+#    df_grammy_transform = transform_db()
 
-    merged_data = merge(df_spotify_transform, df_grammy_transform)
-    load_to_db(merged_data)
-    store_to_drive()
+#    merged_data = merge(df_spotify_transform, df_grammy_transform)
+#    load_to_db(merged_data)
+#    store_to_drive()
 
-if __name__ == "__main__":
-    main()
+#if __name__ == "__main__":
+#    main()

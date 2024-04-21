@@ -1,5 +1,5 @@
 import pandas as pd
-import numpy as np
+import json
 import logging
 
 def load_csv():
@@ -9,7 +9,10 @@ def load_csv():
     logging.info("Data Extracted Successfully.")
     return df_spotify
 
-def transform_csv(df_spotify):
+def transform_csv(**kwargs):
+    ti = kwargs["ti"]
+    json_data = json.loads(ti.xcom_pull(task_ids="read_csv"))
+    df_spotify = pd.json_normalize(data=json_data)
     logging.info('Starting data cleaning and transformations...')
     
     df_spotify.drop('Unnamed: 0', axis=1, inplace=True)
