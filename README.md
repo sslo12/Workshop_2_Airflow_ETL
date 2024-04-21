@@ -12,8 +12,8 @@ The main goals of this workshop are:
   * <img src="https://github.com/sslo12/Workshop-1-ETL/assets/115416417/b23a91ab-151a-4dd8-b421-fc87111e3481" alt="Looker Studio" width="21px" height="21px"> Python
   * <img src="https://cdn.icon-icons.com/icons2/2667/PNG/512/jupyter_app_icon_161280.png" alt="Looker Studio" width="21px" height="21px"> Jupyter Notebook
   * <img src="https://cdn.icon-icons.com/icons2/2415/PNG/512/mysql_original_wordmark_logo_icon_146417.png" alt="Looker Studio" width="21px" height="21px"> Relational database (MySQL)
-  * <img src="![image](https://github.com/sslo12/Workshop-2/assets/115416417/dfa7c841-a14b-4638-9c9e-cff8738a2ab0)" alt="Apache Airflow" width="21px" height="21px"> Apache Airflow
-  * <img src="![image](https://github.com/sslo12/Workshop-2/assets/115416417/6a50f962-c6b1-4d2f-bc2c-23e5f2c55fe2)" alt="Windows Subsystem for Linux (WLS)" width="21px" height="21px"> Windows Subsystem for Linux (WLS)
+  * <img src="https://github.com/sslo12/Workshop-2/assets/115416417/dfa7c841-a14b-4638-9c9e-cff8738a2ab0" alt="Apache Airflow" width="21px" height="21px"> Apache Airflow
+  * <img src="https://github.com/sslo12/Workshop-2/assets/115416417/6a50f962-c6b1-4d2f-bc2c-23e5f2c55fe2" alt="Windows Subsystem for Linux (WLS)" width="21px" height="21px"> Windows Subsystem for Linux (WLS)
   * <img src="https://i.pinimg.com/736x/7a/f2/1e/7af21eaf89a449831a1e12d640b54fae.jpg" alt="Looker Studio" width="21px" height="21px"> Power BI Desktop
 ***
 # Data Information
@@ -84,7 +84,7 @@ Note: Ensure that all preceding steps have been successfully completed before ru
 ### Step 9: Graphics
 To set up the dashboard and connect PowerBI to Drive, you can follow the instructions in [this video](https://www.youtube.com/watch?v=ufrVf6BTLKc&t=359s).
 
-### References
+## References
 1.	12.2. CONECTARSE A LA BASE DE DATOS Y EJECUTAR CONSULTAS. (N.D.). UNIWEBSIDAD.COM. RETRIEVED MARCH 8, 2024, FROM HTTPS://UNIWEBSIDAD.COM/LIBROS/PYTHON/CAPITULO-12/CONECTARSE-A-LA-BASE-DE-DATOS-Y-EJECUTAR-CONSULTAS
 2.	MATPLOTLIB TUTORIAL. (N.D.). W3SCHOOLS.COM. RETRIEVED MARCH 8, 2024, FROM HTTPS://WWW.W3SCHOOLS.COM/PYTHON/MATPLOTLIB_INTRO.ASP NA. (2019, DECEMBER 12). ANÁLISIS EXPLORATORIO DE DATOS CON PANDAS EN PYTHON. APRENDE 
 3.	MACHINE LEARNING. HTTPS://WWW.APRENDEMACHINELEARNING.COM/ANALISIS-EXPLORATORIO-DE- DATOS-PANDAS-PYTHON/
