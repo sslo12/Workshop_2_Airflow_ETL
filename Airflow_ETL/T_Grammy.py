@@ -1,40 +1,43 @@
 import pandas as pd
+import numpy as np
 import logging
 import call_db
-import json
 
 def load_db():
     logging.info("Loading data from MySQL database...")
     data_grammy = call_db.query_db()
     logging.info("Data loaded successfully.")
-    return data_grammy.to_json(orient='records')
+    #print("Data loaded:", data_grammy[:5])
+    return data_grammy
 
-def transform_db(**kwargs):
-    ti = kwargs["ti"]
-    df_db = json.loads(ti.xcom_pull(taks_ids="load_db"))
-    df = pd.json_normalize(df_db)
+
+def transform_db():
     logging.info("Starting cleaning and transformation processes...")
-    df['published_at'] = pd.to_datetime(df['published_at'])
-    df['updated_at'] = pd.to_datetime(df['updated_at'])
-    logging.info("Converted dates to datetime.")
-    df['nominee'].fillna('Unknown', inplace=True)
+    df_db = call_db.query_db()
+    df = pd.DataFrame(df_db)
+
     df.dropna(subset=['artist'], inplace=True)
     logging.info("Handled missing values.")
-    df['artist'] = df['artist'].str.title()
-    df['nominee'] = df['nominee'].str.title()
+
+    df[['winner', 'nominee', 'artist', 'year']]
     df.rename(columns={'winner': 'was_nominated'}, inplace=True)
-    df.drop(['workers', 'img'], axis=1, inplace=True)
-    logging.info("Normalized text fields and delete innecesary columns.")
+    logging.info("Deleted unnecessary columns.")
+
     df.drop_duplicates(inplace=True)
     logging.info("Removed duplicates.")
     logging.info("Cleaning and transformation processes completed.")
     return df.to_json(orient='records')
 
+#df = load_db()
+#df1 = transform_db()
+#print(df1)
+
+
 #def save_db(df, output_file):
-#    logging.info("Saving cleaned data...")
-#    df.to_csv(output_file, index=False)
-#   logging.info("Data saved successfully.")
-#
+#  logging.info("Saving cleaned data...")
+#  df.to_csv(output_file, index=False)
+#  logging.info("Data saved successfully.")
+
 #def main():
 #    output_file = './Datasets/transformed_grammy.csv'
 #    df = load_db()

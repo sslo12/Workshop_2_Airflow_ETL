@@ -1,21 +1,17 @@
 import pandas as pd
+import numpy as np
 import logging
-import json
-
 
 def load_csv():
     logging.info("Extract Data...")
     file_path = './Datasets/spotify_dataset.csv'
-    data = pd.read_csv(file_path)
-    logging.info("Data Extract Successfully.")
-    return data.to_json(orient='records')
+    df_spotify = pd.read_csv(file_path)
+    logging.info("Data Extracted Successfully.")
+    return df_spotify
 
-def transform_csv(**kwargs):
-    ti = kwargs["ti"]
-    csv = json.loads(ti.xcom_pull(task_ids="load_csv"))
-    df_spotify = pd.json_normalize(data=csv)
+def transform_csv(df_spotify):
     logging.info('Starting data cleaning and transformations...')
-
+    
     df_spotify.drop('Unnamed: 0', axis=1, inplace=True)
     logging.info('Removed redundant index column')
     
@@ -36,6 +32,7 @@ def transform_csv(**kwargs):
     df_spotify.drop_duplicates(inplace=True)
     logging.info('Removed duplicate records')
     return df_spotify.to_json(orient='records')
+
 
 #def save_csv(df, output_file):
 #    logging.info("Saving cleaned data...")

@@ -1,11 +1,13 @@
 from pydrive2.auth import GoogleAuth
 from pydrive2.drive import GoogleDrive
 import logging
-import pandas as pd
 import json
+import pandas as pd
 import call_db
+from T_Grammy import transform_db
+from T_Spotify import load_csv, transform_csv
 
-credentials_path = './Airflow_ETL/credentials_module.json'
+credentials_path = 'Airflow_ETL/credentials_module.json'
 
 # LOGIN SESSION
 def login():
@@ -22,70 +24,66 @@ def login():
     else:
         logging.info("Authentication already exists")
         gauth.Authorize()
-        
     gauth.SaveCredentialsFile(credentials_path)
-    credenciales = GoogleDrive(gauth)
-    return credenciales
+    drive = GoogleDrive(gauth)
+    return drive
 
 # UPLOAD A FILE TO DRIVE
 def upload_csv(file_path, id_folder):
-    credentials = login()
-    file_csv = credentials.CreateFile({'parents': [{"kind": "drive#fileLink",\
-                                                    "id": id_folder}]})
+    drive = login()
+    file_csv = drive.CreateFile({'parents': [{"kind": "drive#fileLink", "id": id_folder}]})
     file_csv['title'] = file_path.split("/")[-1]
     file_csv.SetContentFile(file_path)
     file_csv.Upload()
-    logging.info("Data Successfully Uploaded to Google Drive.")
+    logging.info(f"Data Successfully Uploaded to Google Drive: {file_path}")
 
-def decade(year):
-    return (year // 10) * 10
-
-# COMBINATION OF CSV AND DB
-def merge(**kwargs):
-    ti = kwargs['ti']
-    data = json.loads(ti.xcom_pull(task_ids="transform_db"))
-    grammy_df = pd.json_normalize(data=data)
-
-    data = json.loads(ti.xcom_pull(task_ids="transform_csv"))
-    spotify_df = pd.json_normalize(data=data)
+# COMBINE CSV AND DB DATA
+def merge(spotify_data, grammy_data):
+    grammy = json.loads(grammy_data)
+    grammy_df = pd.json_normalize(grammy)
+    spotify = json.loads(spotify_data)
+    spotify_df = pd.json_normalize(spotify)
     logging.info("Data merging process started...")
 
-    merged_data = pd.merge(grammy_df, spotify_df, left_on='artist', right_on='artists', how='inner')
-    merged_data['decade'] = merged_data['year'].apply(decade)
-    if 'grammy_id' in merged_data.columns:
-        merged_data.drop_duplicates(subset='grammy_id', inplace=True)
-    col_interest = ['year', 'category', 'nominee', 'artist', 'was_nominated', 
-                           'track_id', 'artists', 'track_name', 'popularity', 'danceability', 
-                           'energy', 'valence', 'album_name', 'explicit', 'decade']
-    merged_data = merged_data[col_interest]
+    merged_df = spotify_df.merge(grammy_df, how="inner", left_on='track_name', right_on='nominee')
+    merged_df['nomination_dec'] = merged_df['year'].apply(lambda x: (x // 10) * 10)
+    merged_df.drop(['artists', 'nominee'], axis=1, inplace=True)
+    col_interest = ['year', 'category', 'was_nominated', 'artist',
+                    'track_name', 'popularity', 'danceability', 
+                    'energy', 'explicit', 'nomination_dec']
+    merged_data = merged_df[col_interest]
     logging.info("Data merging process successfully completed.")
+    
+    folder_path = './Datasets'
+    file_name = 'awards.csv'
+    file_path = f"{folder_path}/{file_name}"
+    merged_data.to_csv(file_path, index=False)
+    logging.info("Data merging save in folder Datasets!!")
     return merged_data.to_json(orient='records')
 
-
-# LOAD MERGED CSV TO DB
-def load(**kwargs):
-    ti = kwargs["ti"]
-    data = ti.xcom_pull(task_ids="merge")
-    if data:
-        data = pd.json_normalize(data)
-        logging.info("Data normalized and DataFrame created.")
-        
-        try:
-            call_db.insert_data(data)
-            logging.info("Data has been successfully loaded into the database.")
-        except Exception as e:
-            logging.error(f"Error loading data: {str(e)}")
-    else:
-        logging.error("No data available to load.")
+# LOAD DATA TO DATABASE
+def load_to_db(data):
+    data = json.loads(data)
+    data_load = pd.json_normalize(data)
+    call_db.insert_data(data_load)
+    logging.info("Data has been successfully loaded into the database.")
 
 
-# LOAD CSV MERGED TO DRIVE
-def store(**kwargs):
-    ti = kwargs["ti"]
-    data = ti.xcom_pull(task_ids="merge")
-    if data:
-        data = pd.json_normalize(data)
-        csv_path = './Datasets/awards.csv'
-        data.to_csv(csv_path, index=False)
-        upload_csv(csv_path, '1PnHh7eQz-aWPwuXALNQ2Hu7JaGIWaYUB')
-        logging.info("File 'awards.csv' stored and uploaded to Google Drive.")
+# STORE AND UPLOAD DATA TO DRIVE
+def store_to_drive():
+    file_path = './Datasets/awards.csv'
+    upload_csv(file_path, '1PnHh7eQz-aWPwuXALNQ2Hu7JaGIWaYUB')
+    logging.info("File 'awards.csv' stored and uploaded to Google Drive.")
+
+# MAIN EXECUTION
+def main():
+    df_spotify = load_csv()
+    df_spotify_transform = transform_csv(df_spotify)
+    df_grammy_transform = transform_db()
+
+    merged_data = merge(df_spotify_transform, df_grammy_transform)
+    load_to_db(merged_data)
+    store_to_drive()
+
+if __name__ == "__main__":
+    main()
