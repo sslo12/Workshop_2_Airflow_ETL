@@ -73,7 +73,7 @@ export AIRFLOW_HOME=$(pwd)
 
 You need to adjust the settings in the `airflow.cfg` file. In the `dags_folder` section, make sure to indicate the location of the DAGs. Change `dags` to `Airflow_ETL` to look like this:
 ```
-dags_folder = /root/airflow_workshop/etl_dag
+dags_folder = /root/airflow_workshop/Airflow_ETL
 ```
 ### Step 8: Running the DAG in Airflow:
 Once you have set up Airflow and your DAGs are in the correct location, start Airflow using the following command from the repository root:
