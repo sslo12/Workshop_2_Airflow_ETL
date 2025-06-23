@@ -23,7 +23,26 @@ The dataset the_grammy_awards contains information about the Grammy Awards, incl
 This is a dataset of Spotify tracks over a range of 125 different genres. Each track has some audio features associated with it. The data is in CSV format which is tabular and can be loaded quickly.
 ***
 # Workflow
-![image](https://github.com/sslo12/Workshop-2/assets/115416417/bdfdcc6a-434b-4d2c-ba7f-b7a6e3d90e36)
+```
+Airflow_ETL/
+├── Me_Lo_St.py
+├── T_Grammy.py
+├── T_Spotify.py
+├── call_db.py
+├── dags.py
+├── Config_db/
+│   └── (Archivos de configuración de base de datos)
+├── Datasets/
+│   ├── awards.csv
+│   ├── spotify_dataset.csv
+│   └── the_grammy_awards.csv
+├── Notebooks/
+│   ├── EDA_grammy.ipynb
+│   └── EDA_spotify.ipynb
+├── .gitignore
+├── Dashboard.pdf
+└── requirements.txt
+```
 ***
 
 # Implementation Instructions
